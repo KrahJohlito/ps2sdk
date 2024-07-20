@@ -98,6 +98,8 @@ static void _main()
     if (_ps2sdk_memory_init)
         _ps2sdk_memory_init();
 
+    _InitSys(); // its this but why
+
     // Use arguments sent through start if sent (by ps2link for instance)
     pa = &args;
     if (args.argc == 0 && args_start != NULL && args_start->args.argc != 0)
@@ -117,7 +119,7 @@ static void _main()
         _init();
 
     // Initialize the kernel (Apply necessary patches).
-    _InitSys();
+    //_InitSys();
 
     // call main
     retval = main(pa->argc, pa->argv);

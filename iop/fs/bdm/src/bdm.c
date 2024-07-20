@@ -45,6 +45,7 @@ void bdm_RegisterCallback(bdm_cb cb)
             break;
         }
     }
+        M_PRINTF("cb");
 }
 
 void bdm_connect_bd(struct block_device *bd)
@@ -175,6 +176,7 @@ static void bdm_thread(void *arg)
 
     while (1) {
         WaitEventFlag(bdm_event, BDM_EVENT_CB_MOUNT | BDM_EVENT_CB_UMOUNT | BDM_EVENT_MOUNT, WEF_OR | WEF_CLEAR, &EFBits);
+        M_PRINTF("bdm event thread while loop");
 
         if (EFBits & BDM_EVENT_MOUNT) {
             // Try to mount any unmounted block devices
