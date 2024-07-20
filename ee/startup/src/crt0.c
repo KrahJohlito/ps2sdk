@@ -97,9 +97,6 @@ static void _main()
     // NOTE: this call can restart the application
     if (_ps2sdk_memory_init)
         _ps2sdk_memory_init();
-    
-    // Initialize the kernel (Apply necessary patches).
-    _InitSys();
 
     // Use arguments sent through start if sent (by ps2link for instance)
     pa = &args;
@@ -112,12 +109,15 @@ static void _main()
     // initialize libcglue
     _libcglue_init();
 
+    // Enable interrupts
+    EI();
+
     // call global constructors (weak)
     if (_init)
         _init();
 
-    // Enable interrupts
-    EI();
+    // Initialize the kernel (Apply necessary patches).
+    _InitSys();
 
     // call main
     retval = main(pa->argc, pa->argv);
