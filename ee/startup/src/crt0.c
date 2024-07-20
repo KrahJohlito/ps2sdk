@@ -109,15 +109,15 @@ static void _main()
     // initialize libcglue
     _libcglue_init();
 
-    // Enable interrupts
-    EI();
-
     // call global constructors (weak)
     if (_init)
         _init();
 
     // Initialize the kernel (Apply necessary patches).
     _InitSys();
+
+    // Enable interrupts
+    EI();
 
     // call main
     retval = main(pa->argc, pa->argv);
