@@ -44,8 +44,9 @@ void bdm_RegisterCallback(bdm_cb cb)
             SetEventFlag(bdm_event, BDM_EVENT_CB_MOUNT);
             break;
         }
+        M_PRINTF("bdm cb (for loop)\n");
     }
-        M_PRINTF("cb");
+    M_PRINTF("bdm cb\n");
 }
 
 void bdm_connect_bd(struct block_device *bd)
@@ -63,6 +64,7 @@ void bdm_connect_bd(struct block_device *bd)
             SetEventFlag(bdm_event, BDM_EVENT_MOUNT);
             break;
         }
+        M_PRINTF("bdm connect bd (for loop)\n");
     }
 }
 
@@ -105,6 +107,7 @@ void bdm_connect_fs(struct file_system *fs)
             g_fs[i] = fs;
             break;
         }
+        M_PRINTF("bdm connect fs (for loop)\n");
     }
 
     // New filesystem, try to mount it to the block devices
@@ -162,6 +165,7 @@ static void bdm_try_mount(struct bdm_mounts *mount)
                 break;
             }
         }
+        M_PRINTF("bdm try mount for loop\n");
     }
 }
 
@@ -176,13 +180,14 @@ static void bdm_thread(void *arg)
 
     while (1) {
         WaitEventFlag(bdm_event, BDM_EVENT_CB_MOUNT | BDM_EVENT_CB_UMOUNT | BDM_EVENT_MOUNT, WEF_OR | WEF_CLEAR, &EFBits);
-        M_PRINTF("bdm event thread while loop");
+        M_PRINTF("bdm event thread while loop\n");
 
         if (EFBits & BDM_EVENT_MOUNT) {
             // Try to mount any unmounted block devices
             for (i = 0; i < MAX_CONNECTIONS; ++i) {
                 if ((g_mount[i].bd != NULL) && (g_mount[i].fs == NULL))
                     bdm_try_mount(&g_mount[i]);
+                    M_PRINTF("bdm event for loop (try mount)\n");
             }
         }
 
