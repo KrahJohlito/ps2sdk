@@ -187,7 +187,7 @@ static void bdm_thread(void *arg)
             for (i = 0; i < MAX_CONNECTIONS; ++i) {
                 if ((g_mount[i].bd != NULL) && (g_mount[i].fs == NULL))
                     bdm_try_mount(&g_mount[i]);
-                    M_PRINTF("bdm event for loop (try mount)\n");
+                M_PRINTF("bdm event for loop (try mount)\n");
             }
         }
 
